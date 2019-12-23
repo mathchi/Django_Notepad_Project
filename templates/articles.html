@@ -1,0 +1,103 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+
+
+<div class="row">
+    <div class="col-md-10 offset-md-3">
+      <div class="col-lg-8">
+        <h3>Articles</h3>
+        <hr>
+      </div>
+    </div>
+</div>
+
+
+<!-- Search form -->
+<div class="row">
+  <div class="col-md-10 offset-md-3">
+    <div class="col-lg-8">
+    <form>
+      {% csrf_token %}
+      <input type="text" name="keyword" class="input-sm" maxlength="64" placeholder="Search">
+      <button type="submit" class="btn btn-danger">Search</button>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+
+{% if articles %}
+
+{% for article in articles %}
+
+<div class="row">
+    <div class="col-md-10 offset-md-3">
+    <!-- Post Content Column -->
+    <div class="col-lg-8">
+
+      <!-- Title -->
+      <a href="{% url 'article:detail' article.id %}"><h2 class="mt-4">{{article.title}}</h2></a>
+
+      <!-- Author -->
+      <p class="lead">
+        by
+        {{article.author.username}}
+      </p>
+
+      <hr>
+
+      <!-- Date/Time -->
+      <p>{{article.created_date}}</p>
+
+      <hr>
+
+      <!-- Preview Image -->
+      {% if article.article_image %}
+      <a href="{% url 'article:detail' article.id %}"><img class="img-fluid rounded" src="{{article.article_image.url}}" alt=""/></a>
+      {% endif %}
+      <hr>
+
+      <!-- Post Content -->
+      <p class="lead">
+          {{article.content|safe|truncatewords:10}}
+      </p>
+      <a style="float: right" href="{% url 'article:detail' article.id %}" class="btn btn-danger">Continue Read</a>
+      <hr>
+
+      <!-- Comments Form >
+      <div class="card my-4">
+        <h5 class="card-header">Leave a Comment:</h5>
+        <div class="card-body">
+          <form>
+            <div class="form-group">
+              <textarea class="form-control" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div -->
+
+
+        </div>
+    </div>
+
+  </div>
+
+{% endfor %}
+
+{% else %}
+<div class="row">
+  <div class="col-md-10 offset-md-3">
+    <div class="col-lg-8">
+<div class = "alert alert-danger">
+    There is no articles...
+</div>
+</div>
+</div>
+</div>
+{% endif %}
+
+{% endblock body %}

@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<div class="jumbotron text-center">
+    <h3>Welcome to Py[coders] django Notepad page</h3>
+    <p>>>> We are waiting to write code as code developers <<<</p>
+
+</div>
+
+
+<p>
+    {% if request.user.is_authenticated %}
+            Logged in by {{request.user.username}}
+    {% else %}
+            Not Logged
+    {% endif %}
+
+</p>
+
+<p>
+    <strong>Total users registered: </strong> {{count}}
+</p>
+{% endblock body %}
